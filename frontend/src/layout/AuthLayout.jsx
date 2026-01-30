@@ -8,6 +8,9 @@ const AuthLayout = () => {
     <div>
         {toggle ? <Register setToggle={setToggle} />: <Login setToggle={setToggle} /> }
     </div>
+    // <div className="min-h-screen bg-slate-950 flex justify-center items-center">
+    //   <Outlet />
+    // </div>
   )
 }
 

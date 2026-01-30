@@ -8,6 +8,7 @@ import { useEffect } from 'react'
 import { axiosInstance } from '../config/axiosInstance'
 import ProtectedRoute from '../components/protectedRoute'
 import UserPage from '../pages/UserPage'
+import Profile from '../components/profile/Profile'
 
 const AppRouter = () => {
 
@@ -58,7 +59,7 @@ const AppRouter = () => {
         },
             {
               path: 'profile',
-              element: <UserPage />
+              element: <Profile />
             }
               ]
             }

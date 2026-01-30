@@ -15,6 +15,7 @@ const Register = ({setToggle}) => {
     try {
       const res = await axiosInstance.post("auth/register" , data , {
         withCredentials: true
+        
       })
 
       if(res){

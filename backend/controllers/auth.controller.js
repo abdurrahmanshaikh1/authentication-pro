@@ -60,7 +60,7 @@ export const registerAuthController = async (req , res)=> {
         
 
     } catch (error) {
-        console.log('error ->',error)
+        console.log('error ->',error.response?.data || error.message)
         return res.status(500).json({
             message: "Error in register controller",
             error:error.message
