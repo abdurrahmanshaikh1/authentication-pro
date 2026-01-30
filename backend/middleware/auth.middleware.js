@@ -34,6 +34,10 @@ export const authMiddleWare = async (req , res , next)=> {
             })
         }
 
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "Please verify your email first" });
+        }
+        
         req.user = user;
 
         next()

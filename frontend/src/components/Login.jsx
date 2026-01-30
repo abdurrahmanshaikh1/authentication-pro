@@ -11,6 +11,7 @@ const Login = ({ setToggle }) => {
     const navigate = useNavigate()
 
     const onSubmit = async (data) => {
+        console.log("Submitting login data:", data);
         try {
             let res = await axiosInstance.post("auth/login", data, {
                 withCredentials: true

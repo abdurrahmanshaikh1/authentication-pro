@@ -41,22 +41,22 @@ export const registerAuthController = async (req , res)=> {
 
         await sendVerificationEmail(email, verificationToken, name);
 
-        let token = jwt.sign({id:user._id} , process.env.Jwt_Secret_Key , {
-            expiresIn: '1h'
-        })
+        // let token = jwt.sign({id:user._id} , process.env.Jwt_Secret_Key , {
+        //     expiresIn: '1h'
+        // })
 
-         res.cookie("token" , token ,{
-            httpOnly:true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 60 * 60 * 1000
-         })
+        //  res.cookie("token" , token ,{
+        //     httpOnly:true,
+        //     secure: process.env.NODE_ENV === 'production',
+        //     sameSite: 'strict',
+        //     maxAge: 60 * 60 * 1000
+        //  })
 
         
 
 
         return res.status(201).json({
-            message: "user registered succesfully",
+            message: "User registered successfully. Please verify your email.",
             user: {
                 id: user._id,
                 name: user.name,
@@ -64,11 +64,10 @@ export const registerAuthController = async (req , res)=> {
                 mobile: user.mobile,
                 isVerified: user.isVerified
             },
-            token,
         })
 
     } catch (error) {
-        console.log('error ->',error.response?.data || error.message)
+        console.log('error ->',error)
         return res.status(500).json({
             message: "Error in register controller",
             error:error.message
@@ -176,6 +175,7 @@ export const logoutAuthController = async (req , res)=> {
 export const verifyEmailController = async (req, res) => {
     try {
         const { token } = req.params;
+        console.log('Verification link clicked with token:', token);
 
         const user = await UserModel.findOne({
             verificationToken: token,
@@ -183,9 +183,7 @@ export const verifyEmailController = async (req, res) => {
         });
 
         if (!user) {
-            return res.status(400).json({
-                message: "Invalid ya expired verification link"
-            });
+            return res.status(400).json({ message: "Invalid or expired verification link" });
         }
 
         user.isVerified = true;
@@ -193,15 +191,17 @@ export const verifyEmailController = async (req, res) => {
         user.verificationTokenExpires = undefined;
         await user.save();
 
-        return res.status(200).json({
-            message: "✅ Email verified successfully! Ab login kar sakte hain.",
-            success: true
-        });
+        const jwtToken = jwt.sign({ id: user._id }, process.env.Jwt_Secret_Key, { expiresIn: '1h' });
+res.cookie("token", jwtToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 1000
+});
+             console.log(`User verified: ${user.email}`);
+        return res.redirect("http://localhost:5173/home");
 
     } catch (error) {
-        return res.status(500).json({
-            message: "Verification failed",
-            error: error.message
-        })
+        return res.status(500).json({ message: "Verification failed", error: error.message });
     }
 }

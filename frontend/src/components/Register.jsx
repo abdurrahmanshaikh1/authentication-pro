@@ -12,30 +12,27 @@ const Register = ({setToggle}) => {
 
 
   const onSubmit = async (data) => {
-     console.log("Register payload:", data);
-    try {
-      const res = await axiosInstance.post("auth/register" , data , {
-        withCredentials: true
-        
-      })
-      console.log(res)
+  try {
+    const res = await axiosInstance.post("auth/register", data, {
+      withCredentials: true
+    });
 
-      if(res){
-         dispatch(setUser(res.data.user));
-         localStorage.setItem("user",JSON.stringify(res.data.user));
-          localStorage.setItem("token", res.data.token);
+    console.log("Register response:", res);
 
-        alert("Register successfully")
-        console.log("Login data" , res)
-        navigate('/home')
+    if (res.status === 201) {
+      // ✅ show message
+      alert("Registration successful! Please check your email to verify your account.");
 
-      }
-
-    } catch (error) {
-      console.log("error in register api" , error);
+      // ✅ redirect to register-success page
+      navigate('/register-success');
     }
 
-  };
+  } catch (error) {
+    console.log("error in register api", error);
+    alert(error.response?.data?.message || "Something went wrong");
+  }
+};
+
 
   return (
     <>

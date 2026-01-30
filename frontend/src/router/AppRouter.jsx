@@ -10,6 +10,7 @@ import ProtectedRoute from '../components/protectedRoute'
 import UserPage from '../pages/UserPage'
 import Profile from '../components/profile/Profile'
 import VerifyEmail from '../pages/VerifyEmail'
+import RegisterSuccess from '../pages/RegisterSuccess'
 
 const AppRouter = () => {
 
@@ -46,7 +47,11 @@ const AppRouter = () => {
         {
           path: 'verify-email/:token',
           element: <VerifyEmail />
-        }
+        },
+        {
+        path: 'register-success',
+        element: <RegisterSuccess />
+      },
       ],
     },
 
