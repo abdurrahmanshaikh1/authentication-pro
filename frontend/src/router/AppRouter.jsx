@@ -1,0 +1,75 @@
+import { createBrowserRouter, RouterProvider } from 'react-router'
+import AuthLayout from '../layout/AuthLayout'
+import HomeLayout from '../layout/HomeLayout'
+import PublicRoute from '../components/PublicRoute'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../features/AuthSlice'
+import { useEffect } from 'react'
+import { axiosInstance } from '../config/axiosInstance'
+import ProtectedRoute from '../components/protectedRoute'
+import UserPage from '../pages/UserPage'
+
+const AppRouter = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+  if (!token) return;
+
+      (async ()=> {
+        try {
+          let res = await axiosInstance.get('auth/current-user' , {
+            withCredentials: true
+          })
+          if(res){
+            dispatch(setUser(res.data.user))
+          }
+        } catch (error) {
+          console.log("error in current api" , error)
+        }
+      })();
+  }, []);
+  
+
+    let router = createBrowserRouter([
+        {
+            path: '/',
+            element: <PublicRoute />,
+            children : [
+              {
+                path: '',
+                element: <AuthLayout />
+              },
+            ],
+        },
+
+        {
+          path: "/home",
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: '',
+              element: <HomeLayout />,
+              children:[
+                {
+             index: true, 
+             element: <UserPage />
+        },
+            {
+              path: 'profile',
+              element: <UserPage />
+            }
+              ]
+            }
+          ]
+        },
+
+
+    ])
+  return (
+    <div><RouterProvider router={router} /></div>
+  )
+}
+
+export default AppRouter
