@@ -2,18 +2,16 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config(); 
 
-// Create transporter
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
-    secure: true, // true for 465, false for other ports
+    secure: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS, 
     },
 });
 
-// Verify transporter
 transporter.verify((error, success) => {
     if (error) {
         console.log('Email transporter error:', error);
@@ -22,7 +20,6 @@ transporter.verify((error, success) => {
     }
 });
 
-// Function to send verification email
 export const sendVerificationEmail = async (email, token, name) => {
     const verificationUrl = `http://localhost:3000/api/auth/verify-email/${token}`;
     
@@ -64,12 +61,12 @@ export const sendVerificationEmail = async (email, token, name) => {
             `
         });
 
-        console.log(`✅ Verification email successfully sent to ${email}`);
+        console.log(` Verification email successfully sent to ${email}`);
         console.log(`Message ID: ${info.messageId}`); 
         console.log(`Preview URL (for testing with ethereal.email): ${nodemailer.getTestMessageUrl(info)}`);
 
     } catch (error) {
-        console.log(`❌ Failed to send verification email to ${email}:`, error.message);
+        console.log(` Failed to send verification email to ${email}:`, error.message);
         throw error; 
     }
 };
