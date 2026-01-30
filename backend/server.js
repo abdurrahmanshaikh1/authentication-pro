@@ -1,3 +1,6 @@
+
+import dotenv from "dotenv";
+dotenv.config();
 import {router as authRouter}  from "./routes/auth.route.js"
 import profileRouter  from "./routes/profile.route.js"
 import express from 'express'

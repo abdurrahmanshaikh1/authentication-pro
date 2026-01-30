@@ -12,7 +12,6 @@ const Profile = () => {
 
   useEffect(() => {
     if (!user) {
-      // If user is not in Redux, redirect to login
       dispatch(removeUser());
       navigate("/login");
     }

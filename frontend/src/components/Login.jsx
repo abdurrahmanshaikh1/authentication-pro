@@ -19,9 +19,8 @@ const Login = ({ setToggle }) => {
                 console.log(res.data.user)
                 dispatch(setUser(res.data.user))
 
-                // Save in localStorage
                 localStorage.setItem("user", JSON.stringify(res.data.user))
-                localStorage.setItem("token", res.data.token)
+                
             }
             reset()
             alert('Login successfully')

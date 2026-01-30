@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'  // CHANGE: tumhara package.json mein 'bcrypt' hai
+import bcrypt from 'bcrypt'  
 
 const authSchema = new mongoose.Schema({
     name: {
@@ -33,7 +33,11 @@ const authSchema = new mongoose.Schema({
 
     verificationToken:{
         type: String
+    },
+    verificationTokenExpires: {
+        type: Date
     } 
+
 }, { timestamps: true })
 
 authSchema.pre('save', async function () {

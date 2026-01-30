@@ -8,8 +8,8 @@ const Logout = () => {
     const navigate = useNavigate()
 
     const handleLogout = ()=> {
-        //logout functionality will be added here
         alert('User logged out successfully')
+        localStorage.removeItem('token')
         dispatch(removeUser())
         navigate('/' , {replace:true})
 

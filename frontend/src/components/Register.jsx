@@ -12,11 +12,13 @@ const Register = ({setToggle}) => {
 
 
   const onSubmit = async (data) => {
+     console.log("Register payload:", data);
     try {
       const res = await axiosInstance.post("auth/register" , data , {
         withCredentials: true
         
       })
+      console.log(res)
 
       if(res){
          dispatch(setUser(res.data.user));

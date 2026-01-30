@@ -1,5 +1,5 @@
 import express from 'express'
-import { loginAuthController, logoutAuthController, registerAuthController } from '../controllers/auth.controller.js'
+import { loginAuthController, logoutAuthController, registerAuthController, verifyEmailController } from '../controllers/auth.controller.js'
 import { authMiddleWare } from '../middleware/auth.middleware.js'
 
 export const router = express.Router()
@@ -16,3 +16,5 @@ router.get('/current-user' , authMiddleWare , (req , res)=> {
         user:req.user
     })
 } )
+
+router.get('/verify-email/:token', verifyEmailController)

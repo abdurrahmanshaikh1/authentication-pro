@@ -9,6 +9,7 @@ import { axiosInstance } from '../config/axiosInstance'
 import ProtectedRoute from '../components/protectedRoute'
 import UserPage from '../pages/UserPage'
 import Profile from '../components/profile/Profile'
+import VerifyEmail from '../pages/VerifyEmail'
 
 const AppRouter = () => {
 
@@ -16,58 +17,62 @@ const AppRouter = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-  if (!token) return;
+    if (!token) return;
 
-      (async ()=> {
-        try {
-          let res = await axiosInstance.get('auth/current-user' , {
-            withCredentials: true
-          })
-          if(res){
-            dispatch(setUser(res.data.user))
-          }
-        } catch (error) {
-          console.log("error in current api" , error)
+    (async () => {
+      try {
+        let res = await axiosInstance.get('auth/current-user', {
+          withCredentials: true
+        })
+        if (res) {
+          dispatch(setUser(res.data.user))
         }
-      })();
+      } catch (error) {
+        console.log("error in current api", error)
+      }
+    })();
   }, []);
-  
 
-    let router = createBrowserRouter([
+
+  let router = createBrowserRouter([
+    {
+      path: '/',
+      element: <PublicRoute />,
+      children: [
         {
-            path: '/',
-            element: <PublicRoute />,
-            children : [
-              {
-                path: '',
-                element: <AuthLayout />
-              },
-            ],
+          path: '',
+          element: <AuthLayout />
         },
-
         {
-          path: "/home",
-          element: <ProtectedRoute />,
+          path: 'verify-email/:token',
+          element: <VerifyEmail />
+        }
+      ],
+    },
+
+    {
+      path: "/home",
+      element: <ProtectedRoute />,
+      children: [
+        {
+          path: '',
+          element: <HomeLayout />,
           children: [
             {
-              path: '',
-              element: <HomeLayout />,
-              children:[
-                {
-             index: true, 
-             element: <UserPage />
-        },
+              index: true,
+              element: <UserPage />
+            },
             {
               path: 'profile',
               element: <Profile />
             }
-              ]
-            }
           ]
-        },
+        }
+      ]
+    },
 
 
-    ])
+  ])
   return (
     <div><RouterProvider router={router} /></div>
   )
