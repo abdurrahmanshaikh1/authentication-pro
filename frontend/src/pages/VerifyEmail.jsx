@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { axiosInstance } from '../config/axiosInstance';
-// import { toast } from 'react-toastify';
 
 const VerifyEmail = () => {
   const { token } = useParams();
@@ -28,10 +27,9 @@ const VerifyEmail = () => {
 
     } catch (error) {
       console.error(error);
-      setStatus('❌ Invalid or expired verification link');
+      setStatus('Invalid or expired verification link');
       alert('Verification failed. Please register again.');
 
-      // ❌ FAILURE → LOGIN
       setTimeout(() => {
         navigate('/');
       }, 3000);

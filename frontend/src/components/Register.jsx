@@ -21,7 +21,7 @@ const Register = ({setToggle}) => {
 
     if (res.status === 201) {
       alert("Registration successful! Please check your email to verify your account.");
-      console.log("✅ 201 received — navigating now");
+      console.log("201 received — navigating now");
       navigate('/register-success');
     }
 

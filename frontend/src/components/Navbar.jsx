@@ -6,7 +6,6 @@ const Navbar = () => {
   return (
     <nav className="h-16 px-8 flex items-center justify-between bg-white border-b shadow-sm">
 
-      {/* Left Side */}
       <div className="flex items-center gap-6">
         <h1 className="text-xl font-bold tracking-tight text-gray-800">
           Profile Panel
@@ -25,10 +24,8 @@ const Navbar = () => {
         </NavLink>
       </div>
 
-      {/* Right Side */}
       <div className="flex items-center gap-4">
 
-        {/* Fake Avatar Circle (optional) */}
         <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold">
           P
         </div>

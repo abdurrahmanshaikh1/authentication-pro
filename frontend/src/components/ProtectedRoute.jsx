@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 const ProtectedRoute = () => {
   const { user, loading } = useSelector((state) => state.auth);
 
-  if (loading) return null; // or loader
+  if (loading) return null; 
 
   if (!user) {
     return <Navigate to="/" replace />;

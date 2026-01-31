@@ -39,7 +39,7 @@ export const sendVerificationEmail = async (email, token, name) => {
                     <td align="center" bgcolor="#ff6b6b" style="border-radius: 5px;">
                       <a href="${verificationUrl}" target="_blank" style="
                         display: inline-block;
-                        padding: 18px 28px;
+                        padding: 25px 37px;
                         cursor: pointer
                         font-family: Arial, sans-serif;
                         font-size: 16px;
