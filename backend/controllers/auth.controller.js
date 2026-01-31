@@ -28,6 +28,12 @@ export const registerAuthController = async (req , res)=> {
 
         const verificationToken = crypto.randomBytes(32).toString('hex');
 
+        console.log('=== REGISTER DEBUG ===');
+console.log('Register pw length:', password.length);
+console.log('Register pw preview:', password.substring(0, 3) + '...');
+console.log('====================');
+
+
         let user = await  UserModel.create({
             name,
             email,
@@ -79,35 +85,48 @@ export const loginAuthController = async (req , res)=> {
     try {
       let {email , password} = req.body;
       
+      email = email.trim().toLowerCase();
+    password = password.trim();
+
+    console.log('=== FINAL DEBUG ===');
+        console.log('FINAL pw:', JSON.stringify(password));  // Shows hidden chars
+        console.log('FINAL pw length:', password.length);
+
+
       if(!email || !password){
         return res.status(400).json({
             message: "Email and password required"
         })
       }
 
-      let user = await UserModel.findOne({email});
+      const user = await UserModel.findOne({email});
       if(!user){
-        return res.status(404).json({
-            message: "user not found , please register"
+        return res.status(401).json({
+            message: "Invalid email or password"
         })
       }
 
        if (!user.isVerified) {
             return res.status(400).json({
-                message: "Please verify your email first! Check your inbox."
+                message: "Please verify your email first!"
             })
         }
 
+
+        
       let comparePass = await bcrypt.compare(password , user.password);
+     console.log("PASSWORD MATCH RESULT:", comparePass);
       if(!comparePass){
         return res.status(401).json({
-            message: "invalid credentials"
+            message: "invalid credentials",
+            
         })
       }
 
       let token = jwt.sign({id:user._id} , process.env.Jwt_Secret_Key , {
         expiresIn: '1h'
       })
+      console.log(token)
 
       res.cookie("token" , token , {
         httpOnly: true,
@@ -200,6 +219,9 @@ res.cookie("token", jwtToken, {
 });
              console.log(`User verified: ${user.email}`);
         return res.redirect("http://localhost:5173/home");
+//         return res.status(200).json({
+//     message: "Email verified successfully!",
+// });
 
     } catch (error) {
         return res.status(500).json({ message: "Verification failed", error: error.message });

@@ -40,12 +40,5 @@ const authSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-authSchema.pre('save', async function () {
-  if (!this.isModified('password')) return;
-
-  const saltRounds = 12;
-  this.password = await bcrypt.hash(this.password, saltRounds);
-});
-
 
 export const UserModel = mongoose.model('user', authSchema)

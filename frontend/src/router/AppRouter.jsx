@@ -22,12 +22,17 @@ const AppRouter = () => {
 
     (async () => {
       try {
+        await axiosInstance.get(`/auth/verify-email/${token}`, {
+          withCredentials: true,
+        });
+
         let res = await axiosInstance.get('auth/current-user', {
           withCredentials: true
         })
         if (res) {
           dispatch(setUser(res.data.user))
         }
+        
       } catch (error) {
         console.log("error in current api", error)
       }

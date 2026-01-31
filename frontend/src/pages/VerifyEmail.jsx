@@ -18,10 +18,10 @@ const VerifyEmail = () => {
         withCredentials: true,
       });
 
-      setStatus('✅ Email verified successfully!');
+      setStatus('Email verified successfully!');
       alert('Email verified! Redirecting to home...');
 
-      // ✅ SUCCESS → HOME
+      
       setTimeout(() => {
         navigate('/home');
       }, 2000);
