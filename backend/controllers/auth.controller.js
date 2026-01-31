@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import { UserModel } from '../model/user.model.js';
 import cacheInstance from '../services/cache.services.js';
-import { sendVerificationEmail } from './email.controller.js';
+import { sendVerificationEmail } from '../services/email.service.js';
 
 export const registerAuthController = async (req , res)=> {
     console.log(req.body)
@@ -13,7 +13,7 @@ export const registerAuthController = async (req , res)=> {
             return res.status(400).json({
                 message: "All fields are required"
             })
-        }
+        }   
 
         const existingUser = await UserModel.findOne({ 
             $or: [{email}, {mobile}] 
@@ -27,11 +27,6 @@ export const registerAuthController = async (req , res)=> {
         let hashPass = await bcrypt.hash (password , 10);
 
         const verificationToken = crypto.randomBytes(32).toString('hex');
-
-        console.log('=== REGISTER DEBUG ===');
-console.log('Register pw length:', password.length);
-console.log('Register pw preview:', password.substring(0, 3) + '...');
-console.log('====================');
 
 
         let user = await  UserModel.create({
@@ -89,7 +84,7 @@ export const loginAuthController = async (req , res)=> {
     password = password.trim();
 
     console.log('=== FINAL DEBUG ===');
-        console.log('FINAL pw:', JSON.stringify(password));  // Shows hidden chars
+        console.log('FINAL pw:', JSON.stringify(password));
         console.log('FINAL pw length:', password.length);
 
 

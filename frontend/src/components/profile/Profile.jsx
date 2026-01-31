@@ -1,31 +1,18 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 import ProfileLoader from "./ProfileLoader";
 import UserCard from "./UserCard";
-import { removeUser } from "../../features/AuthSlice";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!user) {
-      dispatch(removeUser());
-      navigate("/login");
-    }
-  }, [user, dispatch, navigate]);
 
   if (!user) return <ProfileLoader />;
 
   return (
-    <div className="flex justify-center items-start min-h-screen">
-  <div className="w-full max-w-[280px] bg-white/90 backdrop-blur-xl shadow-xl rounded-xl p-3 border border-white/50">
-    <UserCard user={user} />
-  </div>
-</div>
-
+    <div className="flex justify-center items-start min-h-screen bg-gray-100">
+      <div className="w-full max-w-[280px] bg-white/90 backdrop-blur-xl shadow-xl rounded-xl p-3 border border-white/50 mt-10">
+        <UserCard user={user} />
+      </div>
+    </div>
   );
 };
 

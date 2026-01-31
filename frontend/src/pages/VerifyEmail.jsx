@@ -55,7 +55,7 @@ const VerifyEmail = () => {
             </div>
           ) : status.includes('✅') ? (
             <div className="w-24 h-24 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-8">
-              ✅
+              
             </div>
           ) : (
             <div className="w-24 h-24 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-8">

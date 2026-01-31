@@ -5,6 +5,16 @@ import { useNavigate } from "react-router";
 import { axiosInstance } from "../config/axiosInstance";
 
 const Login = ({ setToggle }) => {
+
+    //  const location = useLocation();
+
+//   useEffect(() => {
+//     const params = new URLSearchParams(location.search);
+//     if (params.get("verified") === "true") {
+//       alert("Email verified successfully. Please login.");
+//     }
+//   }, []);
+
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     const dispatch = useDispatch()

@@ -20,10 +20,8 @@ const Register = ({setToggle}) => {
     console.log("Register response:", res);
 
     if (res.status === 201) {
-      // ✅ show message
       alert("Registration successful! Please check your email to verify your account.");
-
-      // ✅ redirect to register-success page
+      console.log("✅ 201 received — navigating now");
       navigate('/register-success');
     }
 

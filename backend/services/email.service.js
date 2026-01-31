@@ -39,7 +39,7 @@ export const sendVerificationEmail = async (email, token, name) => {
                     <td align="center" bgcolor="#ff6b6b" style="border-radius: 5px;">
                       <a href="${verificationUrl}" target="_blank" style="
                         display: inline-block;
-                        padding: 12px 25px;
+                        padding: 18px 28px;
                         cursor: pointer
                         font-family: Arial, sans-serif;
                         font-size: 16px;
@@ -60,10 +60,6 @@ export const sendVerificationEmail = async (email, token, name) => {
             </div>
             `
         });
-
-        console.log(` Verification email successfully sent to ${email}`);
-        console.log(`Message ID: ${info.messageId}`); 
-        console.log(`Preview URL (for testing with ethereal.email): ${nodemailer.getTestMessageUrl(info)}`);
 
     } catch (error) {
         console.log(` Failed to send verification email to ${email}:`, error.message);
